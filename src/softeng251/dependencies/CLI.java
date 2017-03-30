@@ -10,5 +10,6 @@ public class CLI {
         }
         CSV file = new CSV(args[0]);
         file.load();
+        System.out.println("finished!");
     }
 }

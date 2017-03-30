@@ -3,6 +3,7 @@ package softeng251.dependencies;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -11,7 +12,7 @@ import java.util.HashMap;
  */
 public class CSV {
     private String _filepath;
-    private HashMap _datamap = new HashMap<String, Module>(); // creates the hashmap that'll store all the data
+    private HashMap<String, Module> _datamap = new HashMap(); // creates the hashmap that'll store all the data
     public CSV(String filepath) {
         _filepath = filepath;
     }
@@ -33,11 +34,15 @@ public class CSV {
     private void storeline(String line) {
         String[] splitline = line.split("\t");
         boolean noDep = (splitline.length == 4); // check if it has dependencies
-        if (!(_datamap.containsKey(splitline[0]))) { // if this module doesn't exist in the hashmap
+
+        if (!(_datamap.containsKey(splitline[0]))) { // create a entry in the hashmap if this module isn't already in there
             _datamap.put(splitline[0], new Module(splitline[1], splitline[2], splitline[3], noDep));
         }
-        
-        System.out.println(splitline[0]);
+        Module currentModule = _datamap.get(splitline[0]); // get the Module we want to add to
+        if (!noDep) {
+            currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
+        }
+        System.out.println("Adding: " + splitline[0]); // DEBUG
     }
 }
 
