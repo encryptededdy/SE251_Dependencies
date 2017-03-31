@@ -26,13 +26,14 @@ public class CSV {
                 }
             }
         } catch (IOException exception) {
-            System.err.println("Couldn't read file. Check filename and try again");
-            exception.printStackTrace();
-            System.exit(0);
+            throw new DependenciesException("CSV file could not be read", exception);
         }
     }
     private void storeline(String line) {
         String[] splitline = line.split("\t");
+        if (splitline.length != 4 && splitline.length != 15) {
+            throw new DependenciesException("File format unsupported: Invalid number of columns ("+splitline.length+")");
+        }
         boolean noDep = (splitline.length == 4); // check if it has dependencies
 
         if (!(_datamap.containsKey(splitline[0]))) { // create a entry in the hashmap if this module isn't already in there
@@ -42,7 +43,6 @@ public class CSV {
         if (!noDep) {
             currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
         }
-        System.out.println("Adding: " + splitline[0]); // DEBUG
     }
 }
 

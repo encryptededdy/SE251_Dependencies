@@ -1,6 +1,7 @@
 package softeng251.dependencies;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -17,12 +18,13 @@ public class Module {
     public Module(String pkg, String kind, String mod, boolean noDep) {
         _pkg = pkg;
         _kind = kind;
-        _mod = mod;//todo make this a HashSet
+        String[] modArray = mod.split(","); // split out the modifiers
+        _mod = new HashSet<>(Arrays.asList(modArray)); // put these into a HashArray
         _noDep = noDep;
     }
     public void add(String[] dataarray) {
         if (_noDep) {
-            // you can't add a dependency if there's no dependencies. throw an exception or something
+            throw new DependenciesException("Attempted to add dependency to Module marked noDep");
         } else {
             _dependencyList.add(new Dependency());
             // TODO: Process the dependencies into the class
