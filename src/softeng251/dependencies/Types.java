@@ -7,12 +7,26 @@ package softeng251.dependencies;
 
 public class Types {
     public enum Kind {
-        Class,
-        Interface,
-        Enum,
-        Annotation,
-        Exception,
-        Primitive,
-        Unknown;
+        CLASS,
+        INTERFACE,
+        ENUM,
+        ANNOTATION,
+        EXCEPTION,
+        PRIMITIVE,
+        UNKNOWN;
+    }
+    public enum Modifier {
+        ABSTRACT,
+        FINAL,
+        NATIVE,
+        PRIVATE,
+        PROTECTED,
+        PUBLIC,
+        STRICTFP,
+        STATIC,
+        SYNCHRONIZED,
+        TRANSIENT,
+        VOLATILE,
+        SYNTHETIC;
     }
 }

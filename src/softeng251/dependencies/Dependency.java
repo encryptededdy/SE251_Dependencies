@@ -22,7 +22,7 @@ public class Dependency {
     public Dependency(String[] dataarray) {
         _target = dataarray[0];
         _package = dataarray[1];
-        _kind = Types.Kind.valueOf(dataarray[2]);
+        _kind = Types.Kind.valueOf(dataarray[2].toUpperCase());
         _category = dataarray[3];
         _area = dataarray[4];
         _details = dataarray[5];
