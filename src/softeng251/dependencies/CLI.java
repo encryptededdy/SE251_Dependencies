@@ -1,5 +1,6 @@
 /**
  * Created by Edward Zhang on 30/03/2017.
+ * Takes user input and does general main method things
  */
 package softeng251.dependencies;
 public class CLI {

@@ -5,17 +5,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Edward Zhang on 30/03/2017.
  * Reads the input CSV file
  */
 public class CSV {
+    private static final List<String> _allowedExtensions = Arrays.asList("csv", "txt"); // define the allowed filetypes
     private String _filepath;
-    private HashMap<String, Module> _datamap = new HashMap(); // creates the hashmap that'll store all the data
+    private Map<String, Module> _datamap = new HashMap<String, Module>(); // creates the hashmap that'll store all the data
+
     public CSV(String filepath) {
-        _filepath = filepath;
+        int index = filepath.lastIndexOf('.');
+        String extension = filepath.substring(index+1);
+        if (_allowedExtensions.contains(extension)) { // make sure that the incoming file has the correct extensions
+            _filepath = filepath;
+        } else {
+            throw new DependenciesException("Invalid file extension. Allowed Extensions: "+_allowedExtensions.toString());
+        }
     }
+
     public void load(){ // returns whether load was successful
         String fileln;
         try(BufferedReader file = new BufferedReader(new FileReader(_filepath))) {
@@ -29,6 +40,7 @@ public class CSV {
             throw new DependenciesException("CSV file could not be read", exception);
         }
     }
+
     private void storeline(String line) {
         String[] splitline = line.split("\t");
         if (splitline.length != 4 && splitline.length != 15) {
