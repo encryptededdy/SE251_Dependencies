@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * Created by Edward Zhang on 1/04/2017.
+ * Query handler for Summary
  */
 
 public class QuerySummary implements Query {

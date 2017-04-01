@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 /**
  * Created by Edward Zhang on 1/04/2017.
+ * Query handler for DepCount
  */
 
 public class QueryDepCount implements Query {

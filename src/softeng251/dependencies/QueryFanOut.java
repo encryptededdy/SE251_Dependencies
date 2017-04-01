@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 /**
  * Created by Edward Zhang on 1/04/2017.
+ * Query handler for FanOut
  */
 public class QueryFanOut implements Query{
     private Map<String, Module> _datamap;
@@ -19,7 +20,7 @@ public class QueryFanOut implements Query{
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
         printHeader();
-        for (Map.Entry<String, Integer> entry : dependantModules.entrySet()) { // iterate through the reversed TreeMap (so that it's descending)
+        for (Map.Entry<String, Integer> entry : dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
             System.out.printf("%s   %d\n", entry.getKey(), entry.getValue()); // not sure if tab or space!
         }
     }
