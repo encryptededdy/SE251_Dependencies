@@ -1,5 +1,6 @@
 package softeng251.dependencies;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -15,6 +16,7 @@ public class Module {
     private HashSet<Types.Modifier> _mod = new HashSet<Types.Modifier>();
     private ArrayList<Dependency> _dependencyList = new ArrayList<Dependency>();
     private boolean _hasIndependent = false;
+    private boolean _independentOnly = true;
 
     public Module(String pkg, String kind, String mod) {
         _pkg = pkg;
@@ -31,9 +33,19 @@ public class Module {
         }
     }
     public void add(String[] dataarray) {
-            _dependencyList.add(new Dependency(dataarray));
+        _independentOnly = false;
+        _dependencyList.add(new Dependency(dataarray));
     }
-    public void independent() { // if we find that there is a instance of this module that doesn't have dependencies
+    public void setIndependent() { // if we find that there is a instance of this module that doesn't have dependencies
         _hasIndependent = true;
+    }
+    public boolean isIndependent() {
+        return _hasIndependent;
+    }
+    public boolean isIndependentOnly() {
+        return _independentOnly;
+    }
+    public ArrayList<Dependency> getDependencies() {
+        return _dependencyList;
     }
 }

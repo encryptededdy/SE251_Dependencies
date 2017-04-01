@@ -1,6 +1,7 @@
 package softeng251.dependencies;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -12,11 +13,12 @@ import java.util.Map;
  * Reads the input CSV file
  */
 public class CSV {
-    private String _filepath;
+    private File _filepath;
     private Map<String, Module> _datamap = new HashMap<String, Module>(); // creates the hashmap that'll store all the data
-    private int lineNo = 0; // used for more informative exceptions (to report what line of the CSV we encountered an error on)
+    private int _lineNo = 0; // used for more informative exceptions (to report what line of the CSV we encountered an error on)
+    private int _depCount = 0;
 
-    public CSV(String filepath) {
+    public CSV(File filepath) {
             _filepath = filepath;
     }
 
@@ -25,8 +27,9 @@ public class CSV {
         try(BufferedReader file = new BufferedReader(new FileReader(_filepath))) {
             // read the file line by line
             while((fileln = file.readLine()) != null) {
-                lineNo++; // Track the line number: Useful for errors!
+                _lineNo++; // Track the line number: Useful for errors!
                 if (fileln.length() > 0 && fileln.charAt(0) != '#') { // make sure line isn't commented
+                    _depCount++;
                     storeline(fileln);
                 }
             }
@@ -39,7 +42,7 @@ public class CSV {
         String[] splitline = line.split("\t");
         String mod = "";
         if (splitline.length != 3 && splitline.length != 4 && splitline.length != 15) { // 3: No dependencies, no modifiers. 4: No dependencies. 15: with Dependencies
-            throw new DependenciesException("Error at CSV line "+lineNo+": File format unsupported: Invalid number of columns ("+splitline.length+").");
+            throw new DependenciesException("Error at CSV line "+_lineNo+": File format unsupported: Invalid number of columns ("+splitline.length+").");
         }
         boolean noDep = (splitline.length < 15); // check if it has dependencies. No dependencies if we don't have 15 cols of data.
 
@@ -53,12 +56,20 @@ public class CSV {
         if (!noDep) {
             currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
         } else {
-            currentModule.independent(); // set a flag indicating that there is a instance of this module that doesn't have any dependencies
+            currentModule.setIndependent(); // set a flag indicating that there is a instance of this module that doesn't have any dependencies
         }
     }
 
     public Map<String, Module> getDataMap() {
         return _datamap;
+    }
+
+    public int getDepCount(){
+        return _depCount;
+    }
+
+    public String getFileName(){
+        return _filepath.getName();
     }
 }
 

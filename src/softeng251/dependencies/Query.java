@@ -8,5 +8,5 @@ import java.util.Map;
  */
 public interface Query {
     void display();
-    void setDataSource(Map<String, Module> datamap);
+    void setDataSource(CSV data);  // we don't put this in constructor to minimise duplicate code
 }

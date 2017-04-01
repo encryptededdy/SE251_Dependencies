@@ -36,4 +36,11 @@ public class Dependency {
             throw new DependenciesException("Invalid value for toself ("+dataarray[10]+") - can only be TRUE or FALSE");
         }
     }
+    public String getTarget(boolean noSuffix) {
+        if (noSuffix) {
+            return _target.replaceAll("[*?]", "");
+        } else {
+            return _target;
+        }
+    }
 }
