@@ -1,7 +1,5 @@
 package softeng251.dependencies;
 
-import java.util.HashMap;
-
 /**
  * Created by Edward Zhang on 31/03/2017.
  * Stores dependency information for a Module

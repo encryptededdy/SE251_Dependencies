@@ -19,14 +19,20 @@ public class CLI {
         query.setDataSource(file); // pass the query object all the data
         query.display(); // display the data
         //System.out.println("finished!");
+        System.out.println("test"); // delet dis
     }
     private static Query dispatchQuery(String query) { // returns the corresponding query class based on arguments
-        if (query.equals("Summary")) {
-            return new QuerySummary();
-        } else if (query.equals("DepCount")) {
-            return new QueryDepCount();
-        } else {
-            throw new DependenciesException("Unrecognised Query: "+query);
+        switch(query) {
+            case "Summary":
+                return new QuerySummary();
+            case "DepCount":
+                return new QueryDepCount();
+            case "FanOut":
+                return new QueryFanOut();
+            case "FanIn":
+                return new QueryFanIn();
+            default:
+                throw new DependenciesException("Unrecognised Query: "+query);
         }
     }
 }

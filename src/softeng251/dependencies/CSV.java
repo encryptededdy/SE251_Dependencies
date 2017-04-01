@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class CSV {
     private File _filepath;
-    private Map<String, Module> _datamap = new HashMap<String, Module>(); // creates the hashmap that'll store all the data
+    private Map<String, Module> _datamap = new HashMap<>(); // creates the hashmap that'll store all the data
     private int _lineNo = 0; // used for more informative exceptions (to report what line of the CSV we encountered an error on)
     private int _depCount = 0;
 
