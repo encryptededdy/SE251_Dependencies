@@ -24,8 +24,7 @@ public class CLI {
         if (query.equals("Summary")) {
             return new QuerySummary();
         } else if (query.equals("DepCount")) {
-            return null;
-            // TODO: Implement the rest of the queries
+            return new QueryDepCount();
         } else {
             throw new DependenciesException("Unrecognised Query: "+query);
         }

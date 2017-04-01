@@ -48,4 +48,7 @@ public class Module {
     public ArrayList<Dependency> getDependencies() {
         return _dependencyList;
     }
+    public Types.Kind getKind() {
+        return _kind;
+    }
 }
