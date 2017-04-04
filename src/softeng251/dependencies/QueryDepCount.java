@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 public class QueryDepCount implements Query {
     private Map<String, Module> _datamap;
-    private NavigableMap<Integer, String> dependencies = new TreeMap<Integer, String>();
+    private NavigableMap<Integer, NavigableMap<String, String>> dependencies = new TreeMap<>();
     private String _filename;
     public void display() {
         if(_datamap == null) {
@@ -20,8 +20,10 @@ public class QueryDepCount implements Query {
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
         printHeader();
-        for (Map.Entry<Integer, String> entry : dependencies.descendingMap().entrySet()) { // iterate through the reversed TreeMap (so that it's descending)
-            System.out.printf("%s   %d\n", entry.getValue(), entry.getKey()); // not sure if tab or space!
+        for (NavigableMap<String, String> entry : dependencies.descendingMap().values()) { // iterate through the outer Map (sorts numerically, descending)
+            for (String innerentry: entry.values()) { // iterate through the inner Map (this sorts alphabetically)
+                System.out.println(innerentry);
+            }
         }
     }
 
@@ -36,11 +38,20 @@ public class QueryDepCount implements Query {
     }
 
     private void populateTree() {
+        NavigableMap<String, String> innerMap; // create the inner map
         for (Map.Entry<String, Module> entry : _datamap.entrySet()) { // loop through modules
             int depCount = entry.getValue().getDependencies().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
-            dependencies.put(depCount, source+" ("+kind+")");
+            if (dependencies.containsKey(depCount)) { // if they key is already there
+                innerMap = dependencies.get(depCount);
+                innerMap.put(source, String.format("%s (%s)    %d", source, kind, depCount));
+            } else {
+                innerMap = new TreeMap<>();
+                innerMap.put(source, String.format("%s (%s)    %d", source, kind, depCount));
+                // then add it here
+            }
+            dependencies.put(depCount, innerMap);
         }
     }
 }

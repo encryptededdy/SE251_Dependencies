@@ -29,7 +29,6 @@ public class CSV {
             while((fileln = file.readLine()) != null) {
                 _lineNo++; // Track the line number: Useful for errors!
                 if (fileln.length() > 0 && fileln.charAt(0) != '#') { // make sure line isn't commented
-                    _depCount++;
                     storeline(fileln);
                 }
             }
@@ -41,10 +40,16 @@ public class CSV {
     private void storeline(String line) {
         String[] splitline = line.split("\t");
         String mod = "";
+
         if (splitline.length != 3 && splitline.length != 4 && splitline.length != 15) { // 3: No dependencies, no modifiers. 4: No dependencies. 15: with Dependencies
             throw new DependenciesException("Error at CSV line "+_lineNo+": File format unsupported: Invalid number of columns ("+splitline.length+").");
         }
+
         boolean noDep = (splitline.length < 15); // check if it has dependencies. No dependencies if we don't have 15 cols of data.
+
+        if (!noDep) {
+            _depCount++; // if the module does have dependencies, increment our counter for dependencies
+        }
 
         if (!(_datamap.containsKey(splitline[0]))) { // create a entry in the hashmap if this module isn't already in there
             if (splitline.length > 3) {
@@ -52,7 +57,9 @@ public class CSV {
             }
             _datamap.put(splitline[0], new Module(splitline[1], splitline[2], mod));
         }
+
         Module currentModule = _datamap.get(splitline[0]); // get the Module we want to add to
+
         if (!noDep) {
             currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
         } else {
