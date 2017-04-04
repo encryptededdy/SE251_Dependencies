@@ -19,7 +19,7 @@ public class CLI {
         query.setDataSource(data); // pass the query object all the data
         printHeader(args[1], data); // display the info about the query
         query.display(); // display the data
-
+        //TODO: Implement "no results" output
         System.out.println("test"); // delet dis
     }
 
@@ -33,6 +33,8 @@ public class CLI {
                 return new QueryFanOut();
             case "FanIn":
                 return new QueryFanIn();
+            case "Uses":
+                return new QueryUses();
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
         }

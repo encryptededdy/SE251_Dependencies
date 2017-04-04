@@ -18,7 +18,7 @@ public class QueryFanIn implements Query {
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
         for (Map.Entry<String, Integer> entry : dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
-            System.out.printf("%s   %d\n", entry.getKey(), entry.getValue()); // not sure if tab or space!
+            System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue()); // not sure if tab or space!
         }
     }
 

@@ -41,4 +41,7 @@ public class Dependency {
             return _target;
         }
     }
+    public boolean isCategory(String category) {
+        return _category.toLowerCase().contains(category.toLowerCase());
+    }
 }

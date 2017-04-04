@@ -35,15 +35,17 @@ public class QueryDepCount implements Query {
             int depCount = entry.getValue().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
-            if (dependencies.containsKey(depCount)) { // if they key is already there
-                innerMap = dependencies.get(depCount);
-                innerMap.put(source, String.format("%s (%s)    %d", source, kind, depCount));
-            } else {
-                innerMap = new TreeMap<>();
-                innerMap.put(source, String.format("%s (%s)    %d", source, kind, depCount));
-                // then add it here
+            if (depCount > 0) { // only bother if the module actually has dependencies
+                if (dependencies.containsKey(depCount)) { // if they key is already there
+                    innerMap = dependencies.get(depCount);
+                    innerMap.put(source, String.format("%s (%s)\t%d", source, kind, depCount));
+                } else {
+                    innerMap = new TreeMap<>();
+                    innerMap.put(source, String.format("%s (%s)\t%d", source, kind, depCount));
+                    // then add it here
+                }
+                dependencies.put(depCount, innerMap);
             }
-            dependencies.put(depCount, innerMap);
         }
     }
 }
