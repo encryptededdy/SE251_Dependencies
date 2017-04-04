@@ -30,7 +30,7 @@ public class QueryFanOut implements Query{
     private void populateTree() {
         for (Map.Entry<String, Module> mod : _data.entrySet()) { // go through every module
             HashSet<String> foundModules = new HashSet<>(); // this will store any modules that are a dependency
-            for (Dependency dep : mod.getValue().getDependencies()) {
+            for (Dependency dep : mod.getValue()) {
                 if (_data.containsKey(dep.getTarget(true)) && !dep.getTarget(true).equals(mod.getKey())) { // check if the dependency matches a module AND isn't the same as the Module we're checking from
                     foundModules.add(dep.getTarget(true)); // We don't need duplicate checking as HashSet doesn't allow duplicates
                 }

@@ -32,7 +32,7 @@ public class QueryFanIn implements Query {
             int uses = 0;
             for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
                 if (!currentSrc.equals(entry.getKey())) { // If we're not on the same module.
-                    for (Dependency dep : entry.getValue().getDependencies()) { // go through all dependencies
+                    for (Dependency dep : entry.getValue()) { // go through all dependencies
                         if (dep.getTarget(true).equals(currentSrc)) { // if we find a dependency that's the same as our current module
                             uses++; // count it!
                             break; // to avoid double counting

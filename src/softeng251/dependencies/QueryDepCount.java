@@ -32,7 +32,7 @@ public class QueryDepCount implements Query {
     private void populateTree() {
         NavigableMap<String, String> innerMap; // create the inner map
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
-            int depCount = entry.getValue().getDependencies().size();
+            int depCount = entry.getValue().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
             if (dependencies.containsKey(depCount)) { // if they key is already there

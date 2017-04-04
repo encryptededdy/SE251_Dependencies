@@ -9,11 +9,10 @@ import java.util.HashSet;
  * The hasIndependent flag indicates whether there is a instance of this module that doesn't have any dependencies
  */
 
-public class Module {
+public class Module extends ArrayList<Dependency>{
     private String _pkg;
     private Types.Kind _kind;
     private HashSet<Types.Modifier> _mod = new HashSet<Types.Modifier>();
-    private ArrayList<Dependency> _dependencyList = new ArrayList<Dependency>();
     private boolean _hasIndependent = false;
     private boolean _independentOnly = true;
 
@@ -32,20 +31,18 @@ public class Module {
         }
     }
     public void add(String[] dataarray) {
-        _independentOnly = false;
-        _dependencyList.add(new Dependency(dataarray));
-    }
-    public void setIndependent() { // if we find that there is a instance of this module that doesn't have dependencies
-        _hasIndependent = true;
+        if (dataarray == null || dataarray.length == 0) { // if we get passed null data, we know that this entry doesn't include dependencies.
+            _hasIndependent = true;
+        } else {
+            _independentOnly = false;
+            super.add(new Dependency(dataarray));
+        }
     }
     public boolean isIndependent() {
         return _hasIndependent;
     }
     public boolean isIndependentOnly() {
         return _independentOnly;
-    }
-    public ArrayList<Dependency> getDependencies() {
-        return _dependencyList;
     }
     public Types.Kind getKind() {
         return _kind;

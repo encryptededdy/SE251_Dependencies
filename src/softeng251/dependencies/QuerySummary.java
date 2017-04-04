@@ -44,7 +44,7 @@ public class QuerySummary implements Query {
         HashSet<String> found = new HashSet<String>(); // store targets we've found that don't have dependencies
 
         for (Module mod : _data.values()) { // loop through modules
-            for (Dependency dep : mod.getDependencies()) { // loop through dependencies
+            for (Dependency dep : mod) { // loop through dependencies
                 String target = dep.getTarget(true); // TODO: Not sure how the suffixes affect things. Ignoring them for now.
                 if (!found.contains(target)) { // if we don't already have the target recorded
                     if (_data.containsKey(target)) { // if we can find the target in our dependency module map

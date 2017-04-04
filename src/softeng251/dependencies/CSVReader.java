@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -62,7 +63,7 @@ public class CSVReader {
         if (!noDep) {
             currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
         } else {
-            currentModule.setIndependent(); // set a flag indicating that there is a instance of this module that doesn't have any dependencies
+            currentModule.add(new String[0]); // set a flag indicating that there is a instance of this module that doesn't have any dependencies
         }
     }
 }
