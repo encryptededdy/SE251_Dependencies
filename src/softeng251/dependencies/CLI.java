@@ -12,15 +12,17 @@ public class CLI {
             throw new DependenciesException("Incorrect number of input arguments");
         }
         File filepath = new File(args[0]);
-        CSV file = new CSV(filepath);
-        file.load();
-        // All data is now loaded
+        CSVReader file = new CSVReader(filepath);
+        CSV data = file.load();
+        // All data is now loaded into "data"
         Query query = dispatchQuery(args[1]); // get the right object for the query
-        query.setDataSource(file); // pass the query object all the data
+        query.setDataSource(data); // pass the query object all the data
+        printHeader(args[1], data); // display the info about the query
         query.display(); // display the data
-        //System.out.println("finished!");
+
         System.out.println("test"); // delet dis
     }
+
     private static Query dispatchQuery(String query) { // returns the corresponding query class based on arguments
         switch(query) {
             case "Summary":
@@ -34,5 +36,10 @@ public class CLI {
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
         }
+    }
+
+    private static void printHeader(String query, CSV data) {
+        System.out.println("QUERY "+query);
+        data.printFileName();
     }
 }

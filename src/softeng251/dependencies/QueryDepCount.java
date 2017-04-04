@@ -10,16 +10,14 @@ import java.util.TreeMap;
  */
 
 public class QueryDepCount implements Query {
-    private Map<String, Module> _datamap;
+    private CSV _data;
     private NavigableMap<Integer, NavigableMap<String, String>> dependencies = new TreeMap<>();
-    private String _filename;
     public void display() {
-        if(_datamap == null) {
+        if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
         }
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
-        printHeader();
         for (NavigableMap<String, String> entry : dependencies.descendingMap().values()) { // iterate through the outer Map (sorts numerically, descending)
             for (String innerentry: entry.values()) { // iterate through the inner Map (this sorts alphabetically)
                 System.out.println(innerentry);
@@ -28,18 +26,12 @@ public class QueryDepCount implements Query {
     }
 
     public void setDataSource(CSV data) {
-        _datamap = data.getDataMap();
-        _filename = data.getFileName();
-    }
-
-    private void printHeader() {
-        System.out.println("QUERY DepCount");
-        System.out.println("DATAID "+_filename);
+        _data = data;
     }
 
     private void populateTree() {
         NavigableMap<String, String> innerMap; // create the inner map
-        for (Map.Entry<String, Module> entry : _datamap.entrySet()) { // loop through modules
+        for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
             int depCount = entry.getValue().getDependencies().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
