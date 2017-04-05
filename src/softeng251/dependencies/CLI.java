@@ -1,11 +1,10 @@
+package softeng251.dependencies;
+
+import java.io.File;
 /**
  * Created by Edward Zhang on 30/03/2017.
  * Takes user input and does general main method things
  */
-package softeng251.dependencies;
-
-import java.io.File;
-
 public class CLI {
     public static void main(String[] args) {
         if (args.length != 2) { // in case we don't get filepath and query
@@ -15,12 +14,14 @@ public class CLI {
         CSVReader file = new CSVReader(filepath);
         CSV data = file.load();
         // All data is now loaded into "data"
-        Query query = dispatchQuery(args[1]); // get the right object for the query
-        query.setDataSource(data); // pass the query object all the data
-        printHeader(args[1], data); // display the info about the query
-        query.display(); // display the data
-        //TODO: Implement "no results" output
-        System.out.println("test"); // delet dis
+        if (args[1].equals("Debug")) { // Run the debug method
+            DebugOutput(data, filepath.getName());
+        } else { // Otherwise continue as usual
+            Query query = dispatchQuery(args[1]); // get the right object for the query
+            query.setDataSource(data); // pass the query object all the data
+            printHeader(args[1], data); // display the info about the query
+            query.display(); // display the data
+        }
     }
 
     private static Query dispatchQuery(String query) { // returns the corresponding query class based on arguments
@@ -41,6 +42,17 @@ public class CLI {
                 return new QueryCategoryCheck("field");
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
+        }
+    }
+
+    private static void DebugOutput(CSV data, String filename) {
+        String[] queries = new String[]{"Summary", "DepCount", "FanOut", "FanIn", "Aggregates", "Uses", "Static"};
+        for (String queryname : queries) {
+            System.out.printf("----- Output for %s %s --------\n", filename, queryname);
+            Query query = dispatchQuery(queryname);
+            query.setDataSource(data);
+            printHeader(queryname, data);
+            query.display();
         }
     }
 
