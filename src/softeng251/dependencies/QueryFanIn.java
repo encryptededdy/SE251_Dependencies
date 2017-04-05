@@ -11,7 +11,7 @@ import java.util.TreeMap;
  */
 public class QueryFanIn implements Query {
     private CSV _data;
-    private NavigableMap<String, Integer> _dependantModules = new TreeMap<>();
+    private NavigableMap<String, Integer> _dependantModules = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
