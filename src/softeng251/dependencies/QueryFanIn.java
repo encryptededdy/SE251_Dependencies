@@ -21,7 +21,8 @@ public class QueryFanIn implements Query {
         // print the data in a sorted order (TreeMap remains sorted)
         for (Map.Entry<String, Integer> entry : _dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
             if (entry.getValue() > 0) { // only print if there actually are values
-                System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue());
+                String displayName = String.format("%s (%s)", entry.getKey(), _data.get(entry.getKey()).getKind());
+                System.out.printf("%s\t%d\n", displayName, entry.getValue());
                 _printed++;
             }
         }
