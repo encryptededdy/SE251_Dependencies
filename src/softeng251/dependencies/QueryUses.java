@@ -33,7 +33,7 @@ public class QueryUses implements Query {
         for (Map.Entry<String, Module> mod : _data.entrySet()) { // go through every module
             HashSet<String> foundModules = new HashSet<>();
             for (Dependency dep : mod.getValue()) { // go through the module's dependencies
-                if (dep.isCategory("invoke") || dep.isCategory("field")) { // check if the dependency is used by the module (if category contains invoke or field) TODO: Ewan might be wrong somewhere round here
+                if (dep.isCategory("invoke") || dep.isCategory("field")) { // check if the dependency is used by the module (if category contains invoke or field)
                     foundModules.add(dep.getTarget(true)); // if dependency is used then add it. HashSets by design avoid duplication
                 }
             }
