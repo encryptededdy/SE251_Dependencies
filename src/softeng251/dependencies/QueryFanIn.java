@@ -12,6 +12,7 @@ import java.util.TreeMap;
 public class QueryFanIn implements Query {
     private CSV _data;
     private NavigableMap<String, Integer> _dependantModules = new TreeMap<>();
+    private int _printed = 0;
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
@@ -21,7 +22,11 @@ public class QueryFanIn implements Query {
         for (Map.Entry<String, Integer> entry : _dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
             if (entry.getValue() > 0) { // only print if there actually are values
                 System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue());
+                _printed++;
             }
+        }
+        if (_printed == 0) {
+            System.out.println("No results");
         }
     }
 

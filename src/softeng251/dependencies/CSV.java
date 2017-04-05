@@ -25,7 +25,7 @@ public class CSV extends HashMap<String, Module>{
     }
 
     public void printFileName(){
-        System.out.println("DATAID "+_filepath.getName());
+        System.out.println("DATAID\t"+_filepath.getName());
     }
 }
 

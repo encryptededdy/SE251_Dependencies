@@ -12,6 +12,7 @@ import java.util.TreeMap;
 public class QueryDepCount implements Query {
     private CSV _data;
     private NavigableMap<Integer, NavigableMap<String, String>> dependencies = new TreeMap<>();
+    private int _printed = 0;
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
@@ -19,9 +20,13 @@ public class QueryDepCount implements Query {
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
         for (NavigableMap<String, String> entry : dependencies.descendingMap().values()) { // iterate through the outer Map (sorts numerically, descending)
-            for (String innerentry: entry.values()) { // iterate through the inner Map (this sorts alphabetically)
-                System.out.println(innerentry);
+            for (String innerEntry: entry.values()) { // iterate through the inner Map (this sorts alphabetically)
+                System.out.println(innerEntry);
+                _printed++;
             }
+        }
+        if (_printed == 0) {
+            System.out.println("No results");
         }
     }
 

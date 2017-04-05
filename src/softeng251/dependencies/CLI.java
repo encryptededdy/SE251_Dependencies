@@ -34,16 +34,18 @@ public class CLI {
             case "FanIn":
                 return new QueryFanIn();
             case "Uses":
-                return new QueryUses();
+                return new QueryCategoryCheck(new String[]{"invoke", "field"});
             case "Static":
-                return new QueryStatic();
+                return new QueryCategoryCheck("static");
+            case "Aggregates":
+                return new QueryCategoryCheck("field");
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
         }
     }
 
     private static void printHeader(String query, CSV data) {
-        System.out.println("QUERY "+query);
+        System.out.println("QUERY\t"+query);
         data.printFileName();
     }
 }
