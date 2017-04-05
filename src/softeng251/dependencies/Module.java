@@ -18,7 +18,7 @@ public class Module extends ArrayList<Dependency>{
 
     public Module(String pkg, String kind, String mod) {
         _pkg = pkg;
-        _kind = Types.Kind.valueOf(kind.toUpperCase());
+        _kind = Types.Kind.valueOf(kind);
         String[] modArray = mod.split(","); // split out the modifiers
         for (String currentMod : modArray) {
             try {

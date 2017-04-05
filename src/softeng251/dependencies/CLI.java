@@ -35,6 +35,8 @@ public class CLI {
                 return new QueryFanIn();
             case "Uses":
                 return new QueryUses();
+            case "Static":
+                return new QueryStatic();
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
         }

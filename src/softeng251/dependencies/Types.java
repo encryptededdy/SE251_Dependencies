@@ -7,13 +7,13 @@ package softeng251.dependencies;
 
 public class Types {
     public enum Kind {
-        CLASS,
-        INTERFACE,
-        ENUM,
-        ANNOTATION,
-        EXCEPTION,
-        PRIMITIVE,
-        UNKNOWN;
+        Class,
+        Interface,
+        Enum,
+        Annotation,
+        Exception,
+        Primitive,
+        Unknown;
     }
     public enum Modifier {
         ABSTRACT,
