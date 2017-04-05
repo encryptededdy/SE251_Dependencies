@@ -1,5 +1,6 @@
 package softeng251.dependencies;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -10,15 +11,17 @@ import java.util.TreeMap;
  */
 public class QueryFanIn implements Query {
     private CSV _data;
-    private NavigableMap<String, Integer> dependantModules = new TreeMap<>();
+    private NavigableMap<String, Integer> _dependantModules = new TreeMap<>();
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
         }
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
-        for (Map.Entry<String, Integer> entry : dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
-            System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue()); // not sure if tab or space!
+        for (Map.Entry<String, Integer> entry : _dependantModules.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
+            if (entry.getValue() > 0) {
+                System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue());
+            }
         }
     }
 
@@ -27,22 +30,17 @@ public class QueryFanIn implements Query {
     }
 
     private void populateTree() {
-        for (Map.Entry<String, Module> mod : _data.entrySet()) {
-            String currentSrc = mod.getKey();
-            int uses = 0;
-            for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
-                if (!currentSrc.equals(entry.getKey())) { // If we're not on the same module.
-                    for (Dependency dep : entry.getValue()) { // go through all dependencies
-                        if (dep.getTarget(true).equals(currentSrc)) { // if we find a dependency that's the same as our current module
-                            uses++; // count it!
-                            break; // to avoid double counting
-                        }
-                    }
+        for (String module : _data.keySet()) {
+            _dependantModules.put(module, 0);  // Store all of the modules into an array
+        }
+        for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
+            HashSet<String> modulesFound = new HashSet<>();
+            for (Dependency dep : entry.getValue()) { // go through all dependencies
+                String depTarget = dep.getTarget(true);
+                if (_dependantModules.containsKey(depTarget) && !modulesFound.contains(depTarget) && !depTarget.equals(entry.getKey())) { // if we find a dependency that's a module
+                    modulesFound.add(depTarget);
+                    _dependantModules.put(depTarget,_dependantModules.get(depTarget) + 1);
                 }
-            }
-            if (uses > 0) {
-                String kind = mod.getValue().getKind().toString();
-                dependantModules.put(currentSrc + " (" + kind + ")", uses);
             }
         }
     }
