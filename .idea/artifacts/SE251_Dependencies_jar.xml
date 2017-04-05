@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SE251 Dependencies:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SE251_Dependencies_jar</output-path>
+    <root id="archive" name="SE251 Dependencies.jar">
+      <element id="module-output" name="SE251 Dependencies" />
+    </root>
+  </artifact>
+</component>

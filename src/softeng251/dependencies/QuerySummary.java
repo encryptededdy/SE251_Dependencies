@@ -19,10 +19,10 @@ public class QuerySummary implements Query {
         int srcNoDeps = countNoDeps();
         int targetNotSrc = countTargetNSrc();
         // print the data
-        System.out.println("DEPS "+_deps);
-        System.out.println("SRCWITHDEPS "+srcWithDeps);
-        System.out.println("SRCNODEPS "+srcNoDeps);
-        System.out.println("TGTNOTSRC "+targetNotSrc);
+        System.out.println("DEPS\t"+_deps);
+        System.out.println("SRCWITHDEPS\t"+srcWithDeps);
+        System.out.println("SRCNODEPS\t"+srcNoDeps);
+        System.out.println("TGTNOTSRC\t"+targetNotSrc);
     }
 
     public void setDataSource(CSV data) {
