@@ -15,7 +15,7 @@ public class QuerySummary implements Query {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
         }
-        int srcWithDeps = _data.size();
+        int srcWithDeps = countWithDeps();
         int srcNoDeps = countNoDeps();
         int targetNotSrc = countTargetNSrc();
         // print the data
@@ -34,6 +34,16 @@ public class QuerySummary implements Query {
         int count = 0;
         for (Module mod : _data.values()) {
             if(mod.isIndependent()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int countWithDeps() {
+        int count = 0;
+        for (Module mod : _data.values()) {
+            if(!mod.isIndependentOnly()) {
                 count++;
             }
         }
