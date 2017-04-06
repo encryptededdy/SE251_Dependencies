@@ -1,14 +1,18 @@
-package softeng251.dependencies;
+package softeng251.dependencies.query;
+
+import softeng251.dependencies.data.CSV;
+import softeng251.dependencies.DependenciesException;
+import softeng251.dependencies.data.Dependency;
+import softeng251.dependencies.data.Module;
 
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Created by Edward Zhang on 1/04/2017.
  * Query handler for Summary
  */
 
-public class QuerySummary implements Query {
+public class Summary implements Query {
     private CSV _data;
     private int _deps;
     public void display() {

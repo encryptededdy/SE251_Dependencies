@@ -1,4 +1,6 @@
-package softeng251.dependencies;
+package softeng251.dependencies.data;
+
+import softeng251.dependencies.DependenciesException;
 
 /**
  * Created by Edward Zhang on 31/03/2017.

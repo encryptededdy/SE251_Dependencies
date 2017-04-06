@@ -1,4 +1,6 @@
-package softeng251.dependencies;
+package softeng251.dependencies.query;
+
+import softeng251.dependencies.data.CSV;
 
 /**
  * Created by Edward Zhang on 1/04/2017.

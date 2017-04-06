@@ -1,4 +1,4 @@
-package softeng251.dependencies;
+package softeng251.dependencies.data;
 
 /**
  * All the different custom types(enums) used in Dependencies

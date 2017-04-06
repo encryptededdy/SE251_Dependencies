@@ -1,5 +1,8 @@
 package softeng251.dependencies;
 
+import softeng251.dependencies.data.CSV;
+import softeng251.dependencies.data.Module;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

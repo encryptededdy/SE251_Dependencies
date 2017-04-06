@@ -1,4 +1,8 @@
-package softeng251.dependencies;
+package softeng251.dependencies.query;
+
+import softeng251.dependencies.data.CSV;
+import softeng251.dependencies.DependenciesException;
+import softeng251.dependencies.data.Module;
 
 import java.util.Map;
 import java.util.NavigableMap;
@@ -9,7 +13,7 @@ import java.util.TreeMap;
  * Query handler for DepCount
  */
 
-public class QueryDepCount implements Query {
+public class DepCount implements Query {
     private CSV _data;
     private NavigableMap<Integer, NavigableMap<String, String>> dependencies = new TreeMap<>();
     private int _printed = 0;

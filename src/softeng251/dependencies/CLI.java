@@ -1,5 +1,8 @@
 package softeng251.dependencies;
 
+import softeng251.dependencies.data.CSV;
+import softeng251.dependencies.query.*;
+
 import java.io.File;
 /**
  * Created by Edward Zhang on 30/03/2017.
@@ -27,19 +30,19 @@ public class CLI {
     private static Query dispatchQuery(String query) { // returns the corresponding query class based on arguments
         switch(query) {
             case "Summary":
-                return new QuerySummary();
+                return new Summary();
             case "DepCount":
-                return new QueryDepCount();
+                return new DepCount();
             case "FanOut":
-                return new QueryFanOut();
+                return new FanOut();
             case "FanIn":
-                return new QueryFanIn();
+                return new FanIn();
             case "Uses":
-                return new QueryCategoryCheck(new String[]{"invoke", "field"});
+                return new CategoryCheck(new String[]{"invoke", "field"});
             case "Static":
-                return new QueryCategoryCheck("static");
+                return new CategoryCheck("static");
             case "Aggregates":
-                return new QueryCategoryCheck("field");
+                return new CategoryCheck("field");
             default:
                 throw new DependenciesException("Unrecognised Query: "+query);
         }

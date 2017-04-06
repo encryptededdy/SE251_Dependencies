@@ -1,4 +1,6 @@
-package softeng251.dependencies;
+package softeng251.dependencies.data;
+
+import softeng251.dependencies.DependenciesException;
 
 import java.util.ArrayList;
 import java.util.HashSet;

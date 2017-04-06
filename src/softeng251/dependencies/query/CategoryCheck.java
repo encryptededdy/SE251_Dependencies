@@ -1,4 +1,9 @@
-package softeng251.dependencies;
+package softeng251.dependencies.query;
+
+import softeng251.dependencies.data.CSV;
+import softeng251.dependencies.DependenciesException;
+import softeng251.dependencies.data.Dependency;
+import softeng251.dependencies.data.Module;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -9,15 +14,15 @@ import java.util.TreeMap;
  * Created by Edward Zhang on 5/04/2017.
  * Responds to the Static query
  */
-public class QueryCategoryCheck implements Query {
+public class CategoryCheck implements Query {
     private CSV _data;
     private NavigableMap<String, Integer> moduleData = new TreeMap<>();
     private int _printed = 0;
     private String[] _categoryToCheck;
-    public QueryCategoryCheck(String[] categoryToCheck) {
+    public CategoryCheck(String[] categoryToCheck) {
         _categoryToCheck = categoryToCheck; // if input is array then set directly
     }
-    public QueryCategoryCheck(String categoryToCheck) {
+    public CategoryCheck(String categoryToCheck) {
         _categoryToCheck = new String[]{categoryToCheck}; // if input is single string then put it in a single cell array
     }
     public void display() {
