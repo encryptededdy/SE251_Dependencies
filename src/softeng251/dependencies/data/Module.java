@@ -12,14 +12,10 @@ import java.util.HashSet;
  */
 
 public class Module extends ArrayList<Dependency>{
-    private String _pkg;
     private Types.Kind _kind;
     private HashSet<Types.Modifier> _mod = new HashSet<Types.Modifier>();
-    private boolean _hasIndependent = false;
-    private boolean _independentOnly = true;
 
-    public Module(String pkg, String kind, String mod) {
-        _pkg = pkg;
+    public Module(String kind, String mod) {
         _kind = Types.Kind.valueOf(kind);
         String[] modArray = mod.split(","); // split out the modifiers
         for (String currentMod : modArray) {
@@ -33,18 +29,7 @@ public class Module extends ArrayList<Dependency>{
         }
     }
     public void add(String[] dataarray) {
-        if (dataarray == null || dataarray.length == 0) { // if we get passed null data, we know that this entry doesn't include dependencies.
-            _hasIndependent = true;
-        } else {
-            _independentOnly = false;
-            super.add(new Dependency(dataarray));
-        }
-    }
-    public boolean isIndependent() {
-        return _hasIndependent;
-    }
-    public boolean isIndependentOnly() {
-        return _independentOnly;
+        super.add(new Dependency(dataarray));
     }
     public Types.Kind getKind() {
         return _kind;

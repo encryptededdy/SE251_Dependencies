@@ -57,15 +57,13 @@ public class CSVReader {
             if (splitline.length > 3) {
                 mod = splitline[3]; // only try to read the modifier if there is one. Otherwise we will access out of bounds
             }
-            _data.put(splitline[0], new Module(splitline[1], splitline[2], mod));
+            _data.put(splitline[0], new Module(splitline[2], mod));
         }
 
         Module currentModule = _data.get(splitline[0]); // get the Module we want to add to
 
         if (!noDep) {
             currentModule.add(Arrays.copyOfRange(splitline, 4, splitline.length)); // add the new dependency
-        } else {
-            currentModule.add(new String[0]); // set a flag indicating that there is a instance of this module that doesn't have any dependencies
         }
     }
 }

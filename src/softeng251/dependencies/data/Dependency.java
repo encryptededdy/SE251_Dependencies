@@ -9,21 +9,23 @@ import softeng251.dependencies.DependenciesException;
 
 public class Dependency {
     private String _target;
-    private String _package;
-    private Types.Kind _kind;
     private String _category;
+    // The following fields were defined but are not used for the purposes of this assignment. Removed to save memory.
+    /* private String _package;
+    private Types.Kind _kind;
     private String _area;
     private String _details;
     private String _locations;
-    private String _depTarget; // The second target in the CSV
+    private String _depTarget;
     // Visibility and Inheritance is not needed for this assignment
-    private boolean _toSelf;
+    private boolean _toSelf; */
 
     public Dependency(String[] dataarray) {
         _target = dataarray[0];
-        _package = dataarray[1];
-        _kind = Types.Kind.valueOf(dataarray[2]);
         _category = dataarray[3];
+        // The following fields were defined but are not used for the purposes of this assignment. Removed to same memory.
+        /* _package = dataarray[1];
+        _kind = Types.Kind.valueOf(dataarray[2]);
         _area = dataarray[4];
         _details = dataarray[5];
         _locations = dataarray[6];
@@ -34,7 +36,7 @@ public class Dependency {
             _toSelf = false;
         } else {
             throw new DependenciesException("Invalid value for toself ("+dataarray[10]+") - can only be TRUE or FALSE");
-        }
+        }*/
     }
     public String getTarget(boolean noSuffix) {
         if (noSuffix) {

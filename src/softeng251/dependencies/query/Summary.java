@@ -37,7 +37,7 @@ public class Summary implements Query {
     private int countNoDeps() {
         int count = 0;
         for (Module mod : _data.values()) {
-            if(mod.isIndependent()) {
+            if(mod.size() == 0) {
                 count++;
             }
         }
@@ -47,7 +47,7 @@ public class Summary implements Query {
     private int countWithDeps() {
         int count = 0;
         for (Module mod : _data.values()) {
-            if(!mod.isIndependentOnly()) {
+            if(mod.size() > 0) {
                 count++;
             }
         }
@@ -62,7 +62,7 @@ public class Summary implements Query {
                 String target = dep.getTarget(true); // TODO: Not sure how the suffixes affect things. Ignoring them for now.
                 if (!found.contains(target)) { // if we don't already have the target recorded
                     if (_data.containsKey(target)) { // if we can find the target in our dependency module map
-                        if (_data.get(target).isIndependentOnly()) {
+                        if (_data.get(target).size() == 0) {
                             found.add(target); // if we find it in one of the modules but it reports that it doesn't contain any dependencies, then we add it too.
                         }
                     } else { // we can't find the target
