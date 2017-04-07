@@ -51,7 +51,7 @@ public class CategoryCheck implements Query {
             HashSet<String> foundModules = new HashSet<>();
             for (Dependency dep : mod.getValue()) { // go through the module's dependencies
                 for (String category : _categoryToCheck) { // loop through the specified categories
-                    if (dep.isCategory(category)) { // check if the dependency is of the specified category
+                    if (dep.isCategory(category) && !dep.getTarget(true).equals(mod.getKey())) { // check if the dependency is of the specified category
                         foundModules.add(dep.getTarget(true)); // if dependency is of the specified category then add it. HashSets by design avoid duplication
                     }
                 }
