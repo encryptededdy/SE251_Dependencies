@@ -38,7 +38,7 @@ public class CLI {
             case "FanIn":
                 return new FanIn();
             case "Uses":
-                return new CategoryCheck(new String[]{"invoke", "get"});
+                return new CategoryCheck(new String[]{"invoke", "get", "put"});
             case "Static":
                 return new CategoryCheck("static");
             case "Aggregates":
