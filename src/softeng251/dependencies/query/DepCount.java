@@ -38,7 +38,6 @@ public class DepCount implements Query {
     }
 
     private void populateTree() {
-        NavigableMap<String, String> innerMap; // TODO: Get rid of this innermap bs
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
             int depCount = entry.getValue().size();
             String source = entry.getKey();
