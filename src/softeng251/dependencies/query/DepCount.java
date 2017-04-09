@@ -4,6 +4,7 @@ import softeng251.dependencies.data.CSV;
 import softeng251.dependencies.DependenciesException;
 import softeng251.dependencies.data.Module;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -15,7 +16,7 @@ import java.util.TreeMap;
 
 public class DepCount implements Query {
     private CSV _data;
-    private NavigableMap<Integer, NavigableMap<String, String>> dependencies = new TreeMap<>();
+    private NavigableMap<String, String> dependencies = new TreeMap<>(new AlphaNumericComparator()); // Use our custom comparator on the TreeMap
     private int _printed = 0;
     public void display() {
         if(_data == null) {
@@ -23,11 +24,9 @@ public class DepCount implements Query {
         }
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
-        for (NavigableMap<String, String> entry : dependencies.descendingMap().values()) { // iterate through the outer Map (sorts numerically, descending)
-            for (String innerEntry: entry.values()) { // iterate through the inner Map (this sorts alphabetically)
-                System.out.println(innerEntry);
-                _printed++;
-            }
+        for (String entry : dependencies.values()) { // iterate through the outer Map (custom comparator)
+            System.out.println(entry); // print the value (already formatted)
+            _printed++;
         }
         if (_printed == 0) {
             System.out.println("No results");
@@ -39,21 +38,27 @@ public class DepCount implements Query {
     }
 
     private void populateTree() {
-        NavigableMap<String, String> innerMap; // create the inner map
+        NavigableMap<String, String> innerMap; // TODO: Get rid of this innermap bs
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
             int depCount = entry.getValue().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
             if (depCount > 0) { // only bother if the module actually has dependencies
-                if (dependencies.containsKey(depCount)) { // if they key is already there
-                    innerMap = dependencies.get(depCount);
-                    innerMap.put(source, String.format("%s (%s)\t%d", source, kind, depCount));
-                } else {
-                    innerMap = new TreeMap<>();
-                    innerMap.put(source, String.format("%s (%s)\t%d", source, kind, depCount));
-                    // then add it here
-                }
-                dependencies.put(depCount, innerMap);
+                dependencies.put(String.format("%d %s", depCount, source), String.format("%s (%s)\t%d", source, kind, depCount)); // write both the string and depCount to the key for comparison reasons. Value is preformatted output.
+            }
+        }
+    }
+    class AlphaNumericComparator implements Comparator<String> { // This is a custom comparator for sorting numerically first then alphabetically
+        public int compare(String o1, String o2) {
+            String[] o1Split = o1.split(" ");
+            String[] o2Split = o2.split(" ");
+            // string[0] is the number, string[1] is the source name
+            Integer o1Num = Integer.parseInt(o1Split[0]); // first half of the string is the number, second half is str
+            Integer o2Num = Integer.parseInt(o2Split[0]);
+            if (!o1Num.equals(o2Num)) { // If the numbers are different, then just do a standard numeric int comparison
+                return o2Num.compareTo(o1Num); // do in reverse to attain descending rather than ascending order
+            } else { // otherwise if they are the same we need to do an alphabetical comparison
+                return o1Split[1].compareTo(o2Split[1]);
             }
         }
     }
