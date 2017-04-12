@@ -32,10 +32,8 @@ public class CategoryCheck implements Query {
         populateTree();
         // print the data in a sorted order (TreeMap remains sorted)
         for (Map.Entry<String, Integer> entry : moduleData.entrySet()) { // iterate through the TreeMap and print (it's already sorted)
-            if (entry.getValue() > 0) {
-                _printed++;
-                System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue()); // print module only if it actually has Uses.
-            }
+            _printed++;
+            System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue()); // print module only if it actually has Uses.
         }
         if (_printed == 0) {
             System.out.println("No results");

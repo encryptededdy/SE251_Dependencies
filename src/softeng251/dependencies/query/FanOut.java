@@ -45,10 +45,8 @@ public class FanOut implements Query{
                     foundModules.add(dep.getTarget(true)); // We don't need duplicate checking as HashSet doesn't allow duplicates
                 }
             }
-            if (foundModules.size() > 0) {
-                String displayName = String.format("%s (%s)", mod.getKey(), mod.getValue().getKind());
-                dependantModules.put(displayName, foundModules.size()); // if we found some dependant modules add them to the Map
-            }
+            String displayName = String.format("%s (%s)", mod.getKey(), mod.getValue().getKind());
+            dependantModules.put(displayName, foundModules.size()); // if we found some dependant modules add them to the Map
             foundModules.clear(); // empty the set for next loop
         }
     }
