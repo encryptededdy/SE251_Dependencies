@@ -42,9 +42,7 @@ public class DepCount implements Query {
             int depCount = entry.getValue().size();
             String source = entry.getKey();
             String kind = entry.getValue().getKind().toString();
-            if (depCount > 0) { // only bother if the module actually has dependencies
-                dependencies.put(String.format("%d %s", depCount, source), String.format("%s (%s)\t%d", source, kind, depCount)); // write both the string and depCount to the key for comparison reasons. Value is preformatted output.
-            }
+            dependencies.put(String.format("%d %s", depCount, source), String.format("%s (%s)\t%d", source, kind, depCount)); // write both the string and depCount to the key for comparison reasons. Value is preformatted output.
         }
     }
     class AlphaNumericComparator implements Comparator<String> { // This is a custom comparator for sorting numerically first then alphabetically
