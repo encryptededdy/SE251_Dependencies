@@ -13,7 +13,7 @@ import java.util.Arrays;
  * Created by Edward Zhang on 4/04/2017.
  * Reads the input CSV file
  */
-public class CSVReader {
+class CSVReader {
     private File _filepath;
     private CSV _data; // CSV will store all the data
     private int _lineNo = 0; // used for more informative exceptions (to report what line of the CSV we encountered an error on)
