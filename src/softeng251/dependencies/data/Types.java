@@ -13,9 +13,11 @@ public class Types {
         Annotation,
         Exception,
         Primitive,
-        Unknown;
+        Unknown
     }
-    public enum Modifier {
+
+    // Modifier data processing implemented but not used for the purposes of this Assignment
+    /*public enum Modifier {
         ABSTRACT,
         FINAL,
         NATIVE,
@@ -28,5 +30,5 @@ public class Types {
         TRANSIENT,
         VOLATILE,
         SYNTHETIC;
-    }
+    }*/
 }

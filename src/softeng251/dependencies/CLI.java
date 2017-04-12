@@ -48,7 +48,7 @@ public class CLI {
         }
     }
 
-    private static void DebugOutput(CSV data, String filename) {
+    private static void DebugOutput(CSV data, String filename) { // special debug output to execute all queries
         String[] queries = new String[]{"Summary", "DepCount", "FanOut", "FanIn", "Aggregates", "Uses", "Static"};
         for (String queryname : queries) {
             System.out.printf("----- Output for %s %s --------\n", filename, queryname);

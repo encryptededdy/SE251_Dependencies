@@ -40,13 +40,14 @@ public class FanIn implements Query {
 
     private void populateTree() {
         for (String module : _data.keySet()) {
-            _dependantModules.put(module, 0);  // Store all of the modules that have been seen into an array
+            _dependantModules.put(module, 0);  // Store all of the modules that have been seen into an array. We will loop through these
         }
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
             HashSet<String> modulesFound = new HashSet<>(); // keep track of the dependencies we've added in this module (as we only count one dependency per target module)
             for (Dependency dep : entry.getValue()) { // go through all dependencies
                 String depTarget = dep.getTarget(true);
-                if (_dependantModules.containsKey(depTarget) && !modulesFound.contains(depTarget) && !depTarget.equals(entry.getKey())) { // if we find a dependency that's a seen module, hasn't already been added for this source module and is not the same as the source module
+                // if we find a dependency that's a seen module, hasn't already been added for this source module and is not the same as the source module
+                if (_dependantModules.containsKey(depTarget) && !modulesFound.contains(depTarget) && !depTarget.equals(entry.getKey())) {
                     modulesFound.add(depTarget); // record in modulesFound that we've found a dependency for this module (this is used to prevent duplicate entries)
                     _dependantModules.put(depTarget,_dependantModules.get(depTarget) + 1); // increment the counter for the appropriate module indicating that we've found a new dependency
                 }

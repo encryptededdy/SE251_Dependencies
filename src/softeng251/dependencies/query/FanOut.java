@@ -39,15 +39,14 @@ public class FanOut implements Query{
 
     private void populateTree() {
         for (Map.Entry<String, Module> mod : _data.entrySet()) { // go through every module
-            HashSet<String> foundModules = new HashSet<>(); // this will store any modules that are a dependency
+            HashSet<String> foundModules = new HashSet<>(); // this will store any modules that are a dependency of the currently looped module. Clears every loop
             for (Dependency dep : mod.getValue()) {
                 if (!dep.getTarget(true).equals(mod.getKey())) { // check if the dependency isn't the same as the Module we're checking from
                     foundModules.add(dep.getTarget(true)); // We don't need duplicate checking as HashSet doesn't allow duplicates
                 }
             }
             String displayName = String.format("%s (%s)", mod.getKey(), mod.getValue().getKind());
-            dependantModules.put(displayName, foundModules.size()); // if we found some dependant modules add them to the Map
-            foundModules.clear(); // empty the set for next loop
+            dependantModules.put(displayName, foundModules.size()); // add count of modules depended on by the current module to the map
         }
     }
 }

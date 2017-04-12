@@ -14,7 +14,6 @@ import java.util.HashSet;
 
 public class Summary implements Query {
     private CSV _data;
-    private int _deps;
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
@@ -22,8 +21,9 @@ public class Summary implements Query {
         int srcWithDeps = countWithDeps();
         int srcNoDeps = countNoDeps();
         int targetNotSrc = countTargetNSrc();
+        int deps = NoDeps();
         // print the data
-        System.out.println("DEPS\t"+_deps);
+        System.out.println("DEPS\t"+deps);
         System.out.println("SRCWITHDEPS\t"+srcWithDeps);
         System.out.println("SRCNODEPS\t"+srcNoDeps);
         System.out.println("TGTNOTSRC\t"+targetNotSrc);
@@ -31,7 +31,14 @@ public class Summary implements Query {
 
     public void setDataSource(CSV data) {
         _data = data;
-        _deps = data.getDepCount();
+    }
+
+    private int NoDeps() {
+        int count = 0;
+        for (Module mod : _data.values()) {
+            count+= mod.size();
+        }
+        return count;
     }
 
     private int countNoDeps() {
@@ -55,7 +62,7 @@ public class Summary implements Query {
     }
 
     private int countTargetNSrc() {
-        HashSet<String> found = new HashSet<String>(); // store targets we've found that don't have dependencies
+        HashSet<String> found = new HashSet<>(); // store targets we've found that don't have dependencies
 
         for (Module mod : _data.values()) { // loop through modules
             for (Dependency dep : mod) { // loop through dependencies

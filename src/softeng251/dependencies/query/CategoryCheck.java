@@ -36,7 +36,7 @@ public class CategoryCheck implements Query {
             System.out.printf("%s\t%d\n", entry.getKey(), entry.getValue()); // print module only if it actually has Uses.
         }
         if (_printed == 0) {
-            System.out.println("No results");
+            System.out.println("No results"); // if we printed no data,
         }
     }
 
@@ -46,16 +46,16 @@ public class CategoryCheck implements Query {
 
     private void populateTree() {
         for (Map.Entry<String, Module> mod : _data.entrySet()) { // go through every module
-            HashSet<String> foundModules = new HashSet<>();
+            HashSet<String> foundModules = new HashSet<>(); // foundModule stores the dependencies that match the category in this specific module (to avoid double counting)
             for (Dependency dep : mod.getValue()) { // go through the module's dependencies
                 for (String category : _categoryToCheck) { // loop through the specified categories
-                    if (dep.isCategory(category) && !dep.getTarget(true).equals(mod.getKey())) { // check if the dependency is of the specified category
+                    if (dep.isCategory(category) && !dep.getTarget(true).equals(mod.getKey())) { // check if the dependency is of the specified category and isn't a self dependency
                         foundModules.add(dep.getTarget(true)); // if dependency is of the specified category then add it. HashSets by design avoid duplication
                     }
                 }
             }
 
-            moduleData.put(String.format("%s (%s)", mod.getKey(), mod.getValue().getKind()), foundModules.size());
+            moduleData.put(String.format("%s (%s)", mod.getKey(), mod.getValue().getKind()), foundModules.size()); // the size of the hashset is the number of values (since it deduplicates for us)
         }
     }
 }

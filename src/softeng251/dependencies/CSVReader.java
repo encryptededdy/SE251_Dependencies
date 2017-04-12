@@ -18,12 +18,12 @@ class CSVReader {
     private CSV _data; // CSV will store all the data
     private int _lineNo = 0; // used for more informative exceptions (to report what line of the CSV we encountered an error on)
 
-    public CSVReader(File filepath) {
+    CSVReader(File filepath) {
         _filepath = filepath;
         _data = new CSV(filepath);
     }
 
-    public CSV load(){ // returns whether load was successful
+    CSV load(){ // returns whether load was successful
         String fileln;
         try(BufferedReader file = new BufferedReader(new FileReader(_filepath))) {
             // read the file line by line
@@ -49,15 +49,14 @@ class CSVReader {
 
         boolean noDep = (splitline.length < 15); // check if it has dependencies. No dependencies if we don't have 15 cols of data.
 
-        if (!noDep) {
-            _data.depFound(); // if the module does have dependencies, increment our counter for dependencies
-        }
-
         if (!(_data.containsKey(splitline[0]))) { // create a entry in the hashmap if this module isn't already in there
-            if (splitline.length > 3) {
+
+            // Modifier data processing implemented but not used for the purposes of this Assignment
+            /* if (splitline.length > 3) {
                 mod = splitline[3]; // only try to read the modifier if there is one. Otherwise we will access out of bounds
-            }
-            _data.put(splitline[0], new Module(splitline[2], mod));
+            }*/
+
+            _data.put(splitline[0], new Module(splitline[2]));
         }
 
         Module currentModule = _data.get(splitline[0]); // get the Module we want to add to

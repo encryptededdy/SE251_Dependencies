@@ -10,18 +10,9 @@ import java.util.HashMap;
 
 public class CSV extends HashMap<String, Module>{
     private File _filepath;
-    private int _depCount = 0; // counts the number of dependencies that are stored
 
     public CSV(File filepath) {
         _filepath = filepath;
-    }
-
-    public void depFound() {
-        _depCount++;
-    }
-
-    public int getDepCount(){
-        return _depCount;
     }
 
     public void printFileName(){
