@@ -25,23 +25,24 @@ class CSVReader {
 
     CSV load(){ // returns whether load was successful
         String fileln;
-        try(BufferedReader file = new BufferedReader(new FileReader(_filepath))) {
+        try(BufferedReader file = new BufferedReader(new FileReader(_filepath))) { // try to read the file...
             // read the file line by line
             while((fileln = file.readLine()) != null) {
                 _lineNo++; // Track the line number: Useful for errors!
                 if (fileln.length() > 0 && fileln.charAt(0) != '#') { // make sure line isn't commented
-                    storeline(fileln);
+                    storeline(fileln); // pass the line to storeline
                 }
             }
+            file.close(); // close the file
         } catch (IOException exception) {
-            throw new DependenciesException("CSV file could not be read", exception);
+            throw new DependenciesException("CSV file could not be read", exception); // throw an exception if the file can't be read
         }
+
         return _data;
     }
 
     private void storeline(String line) {
-        String[] splitline = line.split("\t");
-        String mod = "";
+        String[] splitline = line.split("\t"); // split up the line being read by tabs
 
         if (splitline.length != 3 && splitline.length != 4 && splitline.length != 15) { // 3: No dependencies, no modifiers. 4: No dependencies. 15: with Dependencies
             throw new DependenciesException("Error at CSV line "+_lineNo+": File format unsupported: Invalid number of columns ("+splitline.length+").");
