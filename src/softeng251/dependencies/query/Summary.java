@@ -14,18 +14,19 @@ import java.util.HashSet;
 
 public class Summary implements Query {
     private CSV _data;
+    private int _deps = 0;
+    private int _srcNoDeps = 0;
+    private int _srcWithDeps = 0;
     public void display() {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
         }
-        int srcWithDeps = countWithDeps();
-        int srcNoDeps = countNoDeps();
         int targetNotSrc = countTargetNSrc();
-        int deps = NoDeps();
+        DepCounter();
         // print the data
-        System.out.println("DEPS\t"+deps);
-        System.out.println("SRCWITHDEPS\t"+srcWithDeps);
-        System.out.println("SRCNODEPS\t"+srcNoDeps);
+        System.out.println("DEPS\t"+_deps);
+        System.out.println("SRCWITHDEPS\t"+_srcWithDeps);
+        System.out.println("SRCNODEPS\t"+_srcNoDeps);
         System.out.println("TGTNOTSRC\t"+targetNotSrc);
     }
 
@@ -33,32 +34,15 @@ public class Summary implements Query {
         _data = data;
     }
 
-    private int NoDeps() {
-        int count = 0;
-        for (Module mod : _data.values()) {
-            count+= mod.size();
-        }
-        return count;
-    }
-
-    private int countNoDeps() {
-        int count = 0;
-        for (Module mod : _data.values()) {
+    private void DepCounter() {
+        for (Module mod : _data.values()) { // loop through modules
+            _deps+= mod.size(); // add the number of dependencies the module has to the total count
             if(mod.size() == 0) {
-                count++;
+                _srcNoDeps++; // if the module has no dependencies, increment the counter
+            } else {
+                _srcWithDeps++; // if the module HAS dependencies, increment this counter
             }
         }
-        return count;
-    }
-
-    private int countWithDeps() {
-        int count = 0;
-        for (Module mod : _data.values()) {
-            if(mod.size() > 0) {
-                count++;
-            }
-        }
-        return count;
     }
 
     private int countTargetNSrc() {
@@ -66,7 +50,7 @@ public class Summary implements Query {
 
         for (Module mod : _data.values()) { // loop through modules
             for (Dependency dep : mod) { // loop through dependencies
-                String target = dep.getTarget(true); // TODO: Not sure how the suffixes affect things. Ignoring them for now.
+                String target = dep.getTarget(true);
                 if (!found.contains(target)) { // if we don't already have the target recorded
                     if (_data.containsKey(target)) { // if we can find the target in our dependency module map
                         if (_data.get(target).size() == 0) {
