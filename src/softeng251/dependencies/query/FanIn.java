@@ -42,8 +42,9 @@ public class FanIn implements Query {
         for (String module : _data.keySet()) {
             _dependantModules.put(module, 0);  // Store all of the modules that have been seen into an array. We will loop through these
         }
+        
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
-            HashSet<String> modulesFound = new HashSet<>(); // keep track of the dependencies we've added in this module (as we only count one dependency per target module)
+            HashSet<String> modulesFound = new HashSet<>(); // keep track of the dependencies we've added in this module (as we only count one dependency per target module in order to avoid duplicates)
             for (Dependency dep : entry.getValue()) { // go through all dependencies
                 String depTarget = dep.getTarget(true);
                 // if we find a dependency that's a seen module, hasn't already been added for this source module and is not the same as the source module

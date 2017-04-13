@@ -39,15 +39,15 @@ public class DepCount implements Query {
 
     private void populateTree() {
         for (Map.Entry<String, Module> entry : _data.entrySet()) { // loop through modules
-            int depCount = entry.getValue().size();
-            String source = entry.getKey();
-            String kind = entry.getValue().getKind().toString();
+            int depCount = entry.getValue().size(); // gets the number of dependencies this module has
+            String source = entry.getKey(); // gets the current module's name
+            String kind = entry.getValue().getKind().toString(); // get the kind of the current module (in order to format the output)
             dependencies.put(String.format("%d %s", depCount, source), String.format("%s (%s)\t%d", source, kind, depCount)); // write both the string and depCount to the key for comparison reasons. Value is preformatted output.
         }
     }
     class AlphaNumericComparator implements Comparator<String> { // This is a custom comparator for sorting numerically first then alphabetically
         public int compare(String o1, String o2) {
-            String[] o1Split = o1.split(" ");
+            String[] o1Split = o1.split(" "); // split the input strings into their int and String components
             String[] o2Split = o2.split(" ");
             // string[0] is the number, string[1] is the source name
             Integer o1Num = Integer.parseInt(o1Split[0]); // first half of the string is the number, second half is str

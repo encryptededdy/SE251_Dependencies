@@ -9,14 +9,14 @@ import java.util.HashMap;
  */
 
 public class CSV extends HashMap<String, Module>{
-    private File _filepath;
+    private File _file; // Stores information about the file that this CSV object represents
 
-    public CSV(File filepath) {
-        _filepath = filepath;
+    public CSV(File file) {
+        _file = file;
     }
 
     public void printFileName(){
-        System.out.println("DATAID\t"+_filepath.getName());
-    }
+        System.out.println("DATAID\t"+_file.getName());
+    } // Prints the filename
 }
 

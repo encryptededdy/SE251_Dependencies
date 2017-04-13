@@ -21,6 +21,7 @@ public class Summary implements Query {
         if(_data == null) {
             throw new DependenciesException("Cannot execute display() without data source set!");
         }
+        // Call methods to grab the data
         int targetNotSrc = countTargetNSrc();
         DepCounter();
         // print the data

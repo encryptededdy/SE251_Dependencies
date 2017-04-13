@@ -28,9 +28,9 @@ public class CLI {
     }
 
     private static Query dispatchQuery(String query) { // returns the corresponding query class based on arguments
-        switch(query) {
+        switch(query) { // Evaluate the input query string
             case "Summary":
-                return new Summary();
+                return new Summary(); // Return the appropriate object depending on query
             case "DepCount":
                 return new DepCount();
             case "FanOut":
