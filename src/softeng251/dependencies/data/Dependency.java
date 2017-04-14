@@ -20,7 +20,7 @@ public class Dependency {
     // Visibility and Inheritance is not needed for this assignment
     private boolean _toSelf; */
 
-    public Dependency(String[] dataarray) {
+    public Dependency(String[] dataarray) { // Constructor stores the information about the dependency into fields
         _target = dataarray[0];
         _category = dataarray[3];
         // The following fields were defined but are not used for the purposes of this assignment. Removed to same memory.
@@ -38,14 +38,14 @@ public class Dependency {
             throw new DependenciesException("Invalid value for toself ("+dataarray[10]+") - can only be TRUE or FALSE");
         }*/
     }
-    public String getTarget(boolean noSuffix) {
+    public String getTarget(boolean noSuffix) { // nosuffix option will remove the * or ? at the end of the target name
         if (noSuffix) {
             return _target.replaceAll("[*?]", "");
         } else {
             return _target;
         }
     }
-    public boolean isCategory(String category) {
+    public boolean isCategory(String category) { // checks category (case insensitive)
         return _category.toLowerCase().contains(category.toLowerCase());
     }
 }
