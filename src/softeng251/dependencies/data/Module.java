@@ -11,13 +11,13 @@ import java.util.HashSet;
  */
 
 public class Module extends ArrayList<Dependency>{
-    private Types.Kind _kind;
+    private Types.Kind _kind; // stores the kind of the module using the Types.Kind enum
 
     // Modifier data processing implemented but not used for the purposes of this Assignment
     /* private HashSet<Types.Modifier> _mod = new HashSet<Types.Modifier>(); */
 
     public Module(String kind) {
-        _kind = Types.Kind.valueOf(kind);
+        _kind = Types.Kind.valueOf(kind); // converts the input kind String into a Kind enum
 
         // Modifier data processing implemented but not used for the purposes of this Assignment
         /*String[] modArray = mod.split(","); // split out the modifiers
@@ -31,7 +31,7 @@ public class Module extends ArrayList<Dependency>{
             }
         }*/
     }
-    public void add(String[] dataarray) {
+    public void add(String[] dataarray) { // overload add with this method which will convert string arrays into Dependency objects before storage
         super.add(new Dependency(dataarray));
     }
     public Types.Kind getKind() {
